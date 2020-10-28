@@ -54,6 +54,8 @@ class AppTest {
     public void classReflection() {
         try {
             Class<?> c = Class.forName("at.ac.fhcampuswien.shape.Rectangle");
+            // check if there are already fields declared
+            assertTrue(c.getDeclaredFields().length != 0,"Class Rectangle hasn't declared any members yet.");
             // check if all fields are private
             assertTrue(Arrays.stream(c.getDeclaredFields()).allMatch(
                     field -> (Modifier.toString(field.getModifiers()).equals("private") && !field.getName().equals("count"))
