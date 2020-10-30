@@ -12,6 +12,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Timeout(2)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AppTest {
 
     private PrintStream originalOut;
@@ -103,6 +104,7 @@ class AppTest {
     }
 
     @Test
+    @Order(1)
     public void getCount() {
         try {
             Class<?> c = Class.forName("at.ac.fhcampuswien.shape.Rectangle");
