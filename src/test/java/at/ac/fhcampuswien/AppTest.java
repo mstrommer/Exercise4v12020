@@ -55,8 +55,6 @@ class AppTest {
     public void classReflection() {
         try {
             Class<?> c = Class.forName("at.ac.fhcampuswien.shape.Rectangle");
-            // check if there are already fields declared
-            assertTrue(c.getDeclaredFields().length != 0,"Class Rectangle hasn't declared any members yet.");
             // check if all fields are private
             assertTrue(Arrays.stream(c.getDeclaredFields()).allMatch(
                     field -> (Modifier.toString(field.getModifiers()).equals("private") && !field.getName().equals("count"))
@@ -287,6 +285,14 @@ class AppTest {
             Rectangle r2 = (Rectangle) co.newInstance(2,2,3,3);
             Rectangle r3 = (Rectangle) m.invoke(r1,r2);
             assertEquals(":Rectangle P1(2,2) P2(3,3)", r3.toString(),"Intersection not computed correctly.");
+            r1 = (Rectangle) co.newInstance(1,1,3,3);
+            r2 = (Rectangle) co.newInstance(0,0,2,2);
+            r3 = (Rectangle) m.invoke(r1,r2);
+            assertEquals(":Rectangle P1(1,1) P2(2,2)", r3.toString(),"Intersection not computed correctly.");
+            r1 = (Rectangle) co.newInstance(1,1,4,4);
+            r2 = (Rectangle) co.newInstance(0,3,2,5);
+            r3 = (Rectangle) m.invoke(r1,r2);
+            assertEquals(":Rectangle P1(1,3) P2(2,4)", r3.toString(),"Intersection not computed correctly.");
         } catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
             fail("There should be a class called Rectangle.");
@@ -340,4 +346,5 @@ class AppTest {
             fail("Problems might have occurred creating the Object. Also check return types.");
         }
     }
+
 }
